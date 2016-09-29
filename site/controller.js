@@ -15,3 +15,5 @@ function updateModel(model, rowClicked, columnClicked) {
 	console.log('clicked '+rowClicked+columnClicked);
 	return model;
 }
+
+module.exports = updateModel;
