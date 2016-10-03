@@ -27,11 +27,6 @@ function createModel() {
 
 describe("updateModel", function() {
 	var controller = require('../controller.js');
-  var beforeModel;
-
-  beforeEach(function() {
-		beforeModel = createModel();
-  });
 
   it("does nothing if the cell is already taken", function() {
 		var beforeModel = createModel().noughtAt(0, 0);
