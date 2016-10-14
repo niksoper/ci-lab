@@ -31,53 +31,56 @@ If the cell is already taken, this function does nothing.
 Model.prototype.applyClick = function(rowClicked, columnClicked) {
   console.log('clicked ' + rowClicked + columnClicked);
 
-  if (this.board[rowClicked][columnClicked] === "empty") {
-    this.board[rowClicked][columnClicked] =
-      this.isNoughtToPlay ? "nought" : "cross";
-    this.isNoughtToPlay = !this.isNoughtToPlay;
+  if (this.winner) return
 
-    // the variables for this state detection algorithm
-    var row, col, token, isDraw;
+  if (this.board[rowClicked][columnClicked] !== "empty") {
+    console.log('cell already taken');
+    return
+  }
 
-    // check rows for a winner
-    for (row = 0; row <= 2; row++) {
-      token = this.board[row][0];
-      if (token !== "empty" && token === this.board[row][1] &&
-        token === this.board[row][2]) {
-        this.winner = token;
-        this.isGameOver = true;
-        return;
-      }
-    }
-    // check cols for a winner
-    for (col = 0; col <= 2; col++) {
-      token = this.board[0][col];
-      if (token !== "empty" && token === this.board[1][col] &&
-        token === this.board[2][col]) {
-        this.winner = token;
-        this.isGameOver = true;
-        return;
-      }
-    }
+  this.board[rowClicked][columnClicked] =
+    this.isNoughtToPlay ? "nought" : "cross";
+  this.isNoughtToPlay = !this.isNoughtToPlay;
 
-    // check for draw
-    isDraw = true;
-    for (row = 0; row <= 2; row++) {
-      for (col = 0; col <= 2; col++) {
-        token = this.board[row][col];
-        if (token === "empty") {
-          isDraw = false;
-        }
-      }
-    }
+  // the variables for this state detection algorithm
+  var row, col, token, isDraw;
 
-    if (isDraw) {
-      this.winner = false;
+  // check rows for a winner
+  for (row = 0; row <= 2; row++) {
+    token = this.board[row][0];
+    if (token !== "empty" && token === this.board[row][1] &&
+      token === this.board[row][2]) {
+      this.winner = token;
       this.isGameOver = true;
       return;
     }
-  } else {
-    console.log('cell already taken');
+  }
+  // check cols for a winner
+  for (col = 0; col <= 2; col++) {
+    token = this.board[0][col];
+    if (token !== "empty" && token === this.board[1][col] &&
+      token === this.board[2][col]) {
+      this.winner = token;
+      this.isGameOver = true;
+      return;
+    }
+  }
+
+  // check for draw
+  isDraw = true;
+  for (row = 0; row <= 2; row++) {
+    for (col = 0; col <= 2; col++) {
+      token = this.board[row][col];
+      if (token === "empty") {
+        isDraw = false;
+      }
+    }
+  }
+
+  if (isDraw) {
+    this.winner = false;
+    this.isGameOver = true;
+    return;
   }
 };
 
@@ -89,4 +92,3 @@ exports.createModel = function() {
   model.reset();
   return model;
 };
-
