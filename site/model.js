@@ -31,11 +31,11 @@ If the cell is already taken, this function does nothing.
 Model.prototype.applyClick = function(rowClicked, columnClicked) {
   console.log('clicked ' + rowClicked + columnClicked);
 
-  if (this.winner) return
+  if (this.winner) return;
 
   if (this.board[rowClicked][columnClicked] !== "empty") {
     console.log('cell already taken');
-    return
+    return;
   }
 
   this.board[rowClicked][columnClicked] =
